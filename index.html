@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Der zerbrochne Krug – LK Prüfungstraining</title>
+<meta name="theme-color" content="#274c43">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Krug LK">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+:root{
+ --bg:#f4f0e7;--panel:#fffdf8;--ink:#18211f;--muted:#65706c;--line:#d8d2c5;
+ --accent:#274c43;--accent2:#9a6b36;--danger:#8f3b36;--good:#2d6a4f;--warn:#9a6b16;
+ --shadow:0 16px 45px rgba(35,39,37,.09);--radius:22px
+}
+html[data-theme="dark"]{
+ --bg:#151917;--panel:#1e2421;--ink:#eef1ed;--muted:#aeb7b2;--line:#39413d;
+ --accent:#8fc4b1;--accent2:#d4a56f;--danger:#e38b84;--good:#82c9a5;--warn:#e3bd70;
+ --shadow:0 16px 45px rgba(0,0,0,.22)
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+button,input,textarea{font:inherit} button{cursor:pointer}
+.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;padding:12px 20px;display:flex;gap:12px;align-items:center}.brand{font-family:Georgia,serif;font-weight:700;flex:1}.nav button,.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:10px 14px;border-radius:999px}
+.btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}.btn.ghost{background:transparent}
+main{max-width:1180px;margin:auto;padding:30px 20px 80px}.hero{padding:48px 0 28px;display:grid;grid-template-columns:1.4fr .8fr;gap:28px;align-items:center}
+.eyebrow{letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);font-size:.78rem;font-weight:800}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.08;margin:.25em 0}h1{font-size:clamp(2.7rem,7vw,5.7rem);max-width:850px}h2{font-size:clamp(2rem,4vw,3.3rem)}h3{font-size:1.35rem}
+.lead{font-size:1.2rem;color:var(--muted);max-width:760px}.quoteCard,.card,.task,.abi,.examBox{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.quoteCard{padding:28px}.quoteCard .big{font:italic 1.7rem Georgia,serif}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.progressWrap{margin:25px 0 40px}.progressHead{display:flex;justify-content:space-between;gap:15px}.bar{height:10px;background:color-mix(in srgb,var(--line) 75%,transparent);border-radius:99px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:.4s}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{padding:22px;transition:.2s;position:relative;overflow:hidden}.card:hover{transform:translateY(-3px)}.card p{color:var(--muted)}.card .num{font:700 2.4rem Georgia,serif;color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.badge{display:inline-flex;padding:5px 9px;border-radius:99px;font-size:.78rem;font-weight:800;background:color-mix(in srgb,var(--line) 55%,transparent)}
+.section{display:none}.section.active{display:block}.sectionHead{padding:28px 0 18px}.back{margin-bottom:15px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.info{padding:20px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--panel) 75%,transparent);border-radius:0 16px 16px 0}
+.task{padding:22px;margin:20px 0}.task textarea{width:100%;min-height:140px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);resize:vertical}
+.solution{display:none;margin-top:16px;padding:18px;border-radius:14px;background:color-mix(in srgb,var(--accent) 10%,var(--panel));border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line))}
+.solution.open{display:block}.source{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);margin-top:14px;padding-top:10px}
+.options{display:grid;gap:8px;margin:12px 0}.option{display:flex;gap:10px;padding:11px;border:1px solid var(--line);border-radius:12px}
+.abi{padding:22px;margin:24px 0;border-top:4px solid var(--accent2)}.abi ul{padding-left:20px}.checkline{display:flex;gap:8px;align-items:center;margin-top:12px}
+.compare{width:100%;border-collapse:collapse;background:var(--panel);border-radius:18px;overflow:hidden}.compare th,.compare td{padding:13px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}.compare th{background:color-mix(in srgb,var(--accent) 10%,var(--panel))}
+.figures{display:flex;flex-wrap:wrap;gap:10px}.figBtn{padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}.figurePanel{margin-top:14px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px}
+.status{font-weight:800}.safe{color:var(--good)}.repeat{color:var(--warn)}.focus{color:var(--danger)}
+.examBox{padding:24px}.examQuestion{padding:16px 0;border-bottom:1px solid var(--line)}.result{font-size:1.25rem;font-weight:800;margin-top:20px}
+footer{max-width:1180px;margin:auto;padding:30px 20px;color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:850px){.hero,.two{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.hero{padding-top:30px}}
+@media(max-width:580px){.grid{grid-template-columns:1fr}.nav .hideMobile{display:none}h1{font-size:2.65rem}.compare{font-size:.86rem}.compare th,.compare td{padding:8px}}
+
+/* iPad App Mode */
+@media (min-width:700px) and (max-width:1400px){
+ html,body{height:100%;overflow:hidden}
+ body{overscroll-behavior:none}
+ .topbar{height:64px;position:fixed;left:0;right:0;top:0}
+ .nav{height:64px;padding:8px 22px;max-width:none}
+ main{position:fixed;inset:64px 0 42px 0;max-width:none;padding:0;overflow:hidden}
+ footer{position:fixed;left:0;right:0;bottom:0;height:42px;max-width:none;padding:10px 22px;background:var(--bg);font-size:.78rem;z-index:20;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .section{height:100%;overflow:hidden}
+ #home.active{display:grid;grid-template-rows:auto auto 1fr;padding:18px 24px;gap:12px}
+ .hero{padding:0;grid-template-columns:1.45fr .55fr;gap:18px;min-height:0}
+ h1{font-size:clamp(2.55rem,5.4vw,4.7rem);margin:.08em 0}
+ h2{font-size:clamp(1.55rem,2.6vw,2.4rem);margin:.1em 0}
+ h3{font-size:1.08rem}
+ .lead{font-size:1rem;line-height:1.4;margin:.35em 0}
+ .quoteCard{padding:18px}
+ .quoteCard .big{font-size:1.35rem}
+ .quoteCard p{font-size:.9rem;margin-bottom:0}
+ .actions{margin-top:10px}
+ .progressWrap{margin:0;padding:13px 16px}
+ .progressWrap p{margin:.35em 0 0;font-size:.82rem}
+ #home>h2{display:none}
+ .grid{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:10px;min-height:0}
+ .card{padding:12px 14px;border-radius:17px;box-shadow:0 7px 20px rgba(35,39,37,.07);min-height:0}
+ .card .num{font-size:1.45rem;line-height:1}
+ .card h3{font-size:1rem;margin:.18em 0}
+ .card p{font-size:.78rem;line-height:1.25;margin:.25em 0}
+ .card .bar{height:6px}
+ .card .btn{padding:6px 10px;font-size:.76rem}
+ #module.active,#exam.active{display:grid;grid-template-rows:auto 1fr;padding:14px 22px;gap:8px}
+ #module>.back,#exam>.back{justify-self:start;margin:0}
+ #moduleContent,#examContent{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 5px 20px 0;scrollbar-width:thin}
+ .sectionHead{padding:8px 0 10px}
+ .sectionHead .lead{margin-bottom:0}
+ .two{gap:10px}
+ .info{padding:13px}
+ .info p{margin:.35em 0;font-size:.92rem}
+ .task{padding:15px;margin:12px 0}
+ .task textarea{min-height:92px;max-height:130px}
+ .solution{padding:13px}
+ .abi{padding:15px;margin:12px 0}
+ .compare th,.compare td{padding:8px;font-size:.82rem;line-height:1.3}
+ .figurePanel{padding:14px}
+ .examBox{padding:15px}
+ .examQuestion{padding:10px 0}
+ .examQuestion h3{margin:.15em 0}
+ .examQuestion p{margin:.25em 0}
+ .options{grid-template-columns:repeat(3,1fr);gap:6px}
+ .option{padding:8px;font-size:.84rem}
+}
+@media (min-width:700px) and (max-width:950px) and (orientation:portrait){
+ #home.active{padding:16px 18px}
+ .hero{grid-template-columns:1.35fr .65fr}
+ .grid{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr)}
+ .card{padding:10px 12px}
+ .card p{font-size:.73rem}
+ .card h3{font-size:.94rem}
+ .options{grid-template-columns:1fr}
+}
+
+
+.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.42);align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)}
+.modal.open{display:flex}.modalCard{width:min(720px,92vw);max-height:80vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow);position:relative}
+.modalClose{position:absolute;right:14px;top:12px;border:0;background:transparent;color:var(--ink);font-size:2rem}.modalCard textarea{width:100%;min-height:150px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink)}
+
+
+:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+@media (display-mode:standalone){
+ .topbar{padding-top:var(--safe-top)}
+ @media (min-width:700px) and (max-width:1400px){
+  .topbar{height:calc(64px + var(--safe-top))}
+  main{inset:calc(64px + var(--safe-top)) 0 calc(42px + var(--safe-bottom)) 0}
+  footer{height:calc(42px + var(--safe-bottom));padding-bottom:calc(10px + var(--safe-bottom))}
+ }
+}
+
+</style>
+</head>
+<body>
+<header class="topbar"><nav class="nav">
+<div class="brand">⚖ Der zerbrochne Krug</div>
+<button class="hideMobile" onclick="goHome()">Module</button>
+<button onclick="challenge()">Fordere mich heraus!</button>
+<button aria-label="Darstellung wechseln" onclick="toggleTheme()">◐</button>
+</nav></header>
+
+<main>
+<section id="home" class="section active">
+ <div class="hero">
+  <div>
+   <div class="eyebrow">Deutsch · Leistungskurs · Prüfungstraining</div>
+   <h1>Der zerbrochne Krug</h1>
+   <p class="lead">Wiederholen – Analysieren – Überprüfen. Ein interaktives Training zu Kleists Lustspiel mit Schwerpunkt auf Interpretation, Dramaturgie, Macht, Sprache und den beiden Endfassungen.</p>
+   <div class="actions"><button class="btn primary" onclick="openModule('handlung')">Training starten</button><button class="btn" onclick="startExam()">Prüfungsmodus</button></div>
+  </div>
+  <aside class="quoteCard"><div class="eyebrow">Lernprinzip</div><div class="big">Erst denken.<br>Dann vergleichen.</div><p>Die Musterlösung bleibt verborgen, bis du selbst gearbeitet hast.</p></aside>
+ </div>
+ <div class="progressWrap card">
+   <div class="progressHead"><strong>Dein Lernstand</strong><span id="overallText">0 %</span></div>
+   <div class="bar"><i id="overallBar"></i></div><p id="progressAdvice" class="status focus">Schwerpunkt setzen</p>
+ </div>
+ <h2>Themenmodule</h2>
+ <div id="moduleGrid" class="grid"></div>
+</section>
+
+<section id="module" class="section">
+ <button class="btn back" onclick="goHome()">← Zur Übersicht</button>
+ <div id="moduleContent"></div>
+</section>
+
+<section id="exam" class="section">
+ <button class="btn back" onclick="goHome()">← Prüfung verlassen</button>
+ <div class="sectionHead"><div class="eyebrow">Prüfungsmodus</div><h2>Abitur-Check: 10 Aufgaben</h2><p class="lead">Während des Tests bleiben alle Lösungen verborgen. Bewerte dich bei offenen Aufgaben nach der Bearbeitung selbst.</p></div>
+ <div id="examContent" class="examBox"></div>
+</section>
+</main>
+
+
+<div id="appModal" class="modal" onclick="if(event.target===this)closeModal()">
+ <div class="modalCard">
+  <button class="modalClose" onclick="closeModal()">×</button>
+  <div class="eyebrow">Fordere mich heraus!</div>
+  <h2 id="modalTitle">Zufallsfrage</h2>
+  <p id="modalQuestion"></p>
+  <textarea id="modalAnswer" placeholder="Formuliere deine Antwort …"></textarea>
+  <div class="actions"><button class="btn primary" onclick="closeModal()">Fertig</button></div>
+ </div>
+</div>
+
+<footer>Lokale Lern-App · Fortschritt wird auf diesem Gerät im Browser gespeichert · Fachliche Basis: bereitgestellte Unterrichtsmaterialien zu Heinrich von Kleists „Der zerbrochne Krug“.</footer>
+
+<script>
+const modules = [
+{id:'handlung',title:'Handlung & Dramaturgie',icon:'Ⅰ',desc:'Vorgeschichte, Enthüllungsstruktur, Wendepunkte und analytisches Drama.',
+info:`<div class="two"><div class="info"><h3>Vorgeschichte vs. Bühnenhandlung</h3><p>Das entscheidende Geschehen liegt vor Beginn der Bühnenhandlung: Adams nächtlicher Besuch bei Eve, seine Manipulation, Ruprechts Auftauchen, Adams Flucht und das Zerbrechen des Krugs werden erst nachträglich rekonstruiert.</p></div><div class="info"><h3>Enthüllungsdrama</h3><p>Die Spannung entsteht weniger aus der Frage, <em>was</em> geschehen wird, als daraus, <em>wie</em> die Wahrheit über bereits Geschehenes ans Licht kommt. Der Wissensvorsprung des Publikums ermöglicht dramatische Ironie.</p></div></div>`,
+tasks:[
+['🟡 LK-Niveau','Erläutere, warum „Der zerbrochne Krug“ als analytisches Drama bzw. Enthüllungsdrama bezeichnet werden kann.','Das zentrale Ereignis liegt vor Beginn der Bühnenhandlung. Die Gerichtsverhandlung rekonstruiert schrittweise die Vorgeschichte. Indizien, Zeugenaussagen und Adams Widersprüche verdichten sich, bis seine Täterschaft offenbar wird. Spannung entsteht damit aus dem Prozess der Enthüllung. Zugleich weiß das Publikum früh mehr als viele Figuren, wodurch dramatische Ironie entsteht.','Grundlage: Unterrichtsmaterial – Aufbau/analytisches Drama, Auftritte und Informationsverteilung.'],
+['🔴 Abiturniveau','Untersuche, wie der Wissensvorsprung des Publikums zugleich Spannung und Komik erzeugt.','Das Publikum kann Adams Ausflüchte anders bewerten als Figuren wie Marthe oder Ruprecht. Jede neue Manipulation wird doppelt wahrgenommen: innerfiktional als möglicher Ermittlungsbeitrag, für das Publikum als Selbstrettungsversuch des Täters. Die Inkongruenz zwischen Adams Richterrolle und seinem tatsächlichen Täterstatus erzeugt Komik; zugleich steigert sich die Spannung, weil offenbleibt, wann und wodurch die anderen Figuren die Wahrheit erkennen.','Grundlage: Unterrichtsmaterial – analytisches Drama, Komik und dramatische Ironie.']
+]},
+{id:'figuren',title:'Figuren',icon:'Ⅱ',desc:'Adam, Eve, Ruprecht, Marthe, Walter, Licht und Veit im Überblick.',
+info:`<p>Wähle eine Figur. Achte im LK besonders auf <strong>Interessen, Wissensstand, Beziehungen, sprachliches Verhalten und dramaturgische Funktion</strong>.</p><div class="figures" id="figButtons"></div><div id="figurePanel" class="figurePanel"></div>`,
+tasks:[['🟡 LK-Niveau','Zeige an zwei Figuren, wie unterschiedliche Erkenntnisinteressen die Wahrheitssuche erschweren.','Marthe hält Ruprecht aufgrund ihrer Vorannahmen für den Täter; Eve verschweigt zentrale Informationen, um Ruprecht und ihren Ruf zu schützen; Adam manipuliert bewusst, um sich selbst zu retten; Licht beobachtet Adams Fehlverhalten und verfolgt zugleich eigene Interessen. Wahrheit entsteht deshalb erst aus der Korrektur konkurrierender Perspektiven.','Grundlage: Unterrichtsmaterial – Figurencharakterisierung und Erkenntnisproblematik.']]
+},
+{id:'konstellation',title:'Figurenkonstellation',icon:'Ⅲ',desc:'Beziehungen, Abhängigkeiten, Vertrauen und Konflikte.',
+info:`<div class="two"><div class="info"><h3>Adam ↔ Eve</h3><p>Asymmetrisches Machtverhältnis: Amtsautorität, Erpressung, Bedrängung und gegensätzliche Interessen.</p></div><div class="info"><h3>Eve ↔ Ruprecht</h3><p>Liebe und Schutzabsicht treffen auf Misstrauen und Eifersucht; am Ende erfolgt die Versöhnung.</p></div><div class="info"><h3>Eve ↔ Marthe</h3><p>Mutter-Tochter-Konflikt, Ehrvorstellungen und mangelndes Vertrauen. Eine eindeutige Versöhnung wird nicht ausgeführt.</p></div><div class="info"><h3>Adam ↔ Walter</h3><p>Lokale Willkür trifft auf übergeordnete Kontrolle. Walter zwingt Adam zunehmend zu regelgerechtem, öffentlichem Verfahren.</p></div></div>`,
+tasks:[['🟡 LK-Niveau','Welche Beziehung ist für Eves Isolation besonders bedeutsam? Begründe differenziert.','Neben Adams direktem Machtmissbrauch verstärken besonders Ruprechts und Marthes Misstrauen Eves Isolation. Sie kann die Wahrheit nicht gefahrlos offenlegen und erfährt zugleich von den ihr nahestehenden Figuren moralischen Druck. Dadurch wird sichtbar, dass Adams Machtmissbrauch durch soziale Strukturen und fehlendes Vertrauen begünstigt wird.','Grundlage: Unterrichtsmaterial – Eve/Ruprecht, Eve/Marthe, Machtmissbrauch.']]
+},
+{id:'adam',title:'Adam – Richter & Täter',icon:'Ⅳ',desc:'Doppelrolle, Machtmissbrauch, Lügen, Manipulation und Entlarvung.',
+info:`<div class="two"><div class="info"><h3>Die zentrale Paradoxie</h3><p>Der Täter leitet selbst das Verfahren, das seine Tat aufklären soll. Amtliche Macht und privates Eigeninteresse fallen zusammen.</p></div><div class="info"><h3>Strategien</h3><p>Ablenkung, Vorverurteilung, Drohung, wechselnde Täterhypothesen, Manipulation des Verfahrens und spontane Lügen. Mit jedem neuen Indiz wird sein Handlungsspielraum kleiner.</p></div></div>`,
+tasks:[
+['🟡 LK-Niveau','Analysiere die Funktion von Adams wechselnden Lügen und Ablenkungsmanövern.','Adams Lügen dienen nicht nur der Verdeckung einer einzelnen Tat. Sie zeigen seine Fähigkeit, institutionelle Macht für private Zwecke einzusetzen. Widerlegte Behauptungen ersetzt er flexibel durch neue Erklärungen. Gerade diese Improvisation erzeugt Komik, offenbart aber zugleich die Gefährlichkeit einer Rechtsordnung, in der der Richter selbst den Gang des Verfahrens beeinflussen kann.','Grundlage: Unterrichtsmaterial – Adam, Machtmissbrauch und Lügenstrategien.'],
+['🔴 Abiturniveau','Beurteile: „Adam ist nicht deshalb besonders gefährlich, weil er lügt, sondern weil seine Lügen durch institutionelle Macht abgesichert werden.“','Die These ist weitgehend überzeugend. Lügen allein wären private Täuschungen; Adams Amt verleiht ihnen jedoch konkrete Wirkung. Er kann Verhöre steuern, Ruprecht belasten, Eve einschüchtern und mit Sanktionen drohen. Damit verbindet Kleist individuelles Fehlverhalten mit institutionellem Versagen. Einschränkend ist festzuhalten, dass Walter als Kontrollinstanz und die zunehmende Beweislage die Macht des Richters begrenzen.','Grundlage: Unterrichtsmaterial – Justizkritik, PrALR, Adam/Walter.']
+]},
+{id:'eve',title:'Eve – Wissen & Schweigen',icon:'Ⅴ',desc:'Schutzmotiv, Abhängigkeit, Vertrauenskrise und Entwicklung.',
+info:`<div class="two"><div class="info"><h3>Wissen ≠ Sprechfreiheit</h3><p>Eve kennt wesentliche Teile der Wahrheit, kann sie aber zunächst nicht gefahrlos aussprechen. Adam setzt ihre Sorge um Ruprecht als Druckmittel ein.</p></div><div class="info"><h3>Entwicklung</h3><p>Ihr Schweigen schützt Ruprecht, verstärkt aber zugleich das Misstrauen gegen sie. Erst als Adams Täuschung zusammenbricht, kann ihre Perspektive öffentlich wirksam werden.</p></div></div>`,
+tasks:[
+['🟡 LK-Niveau','Ist Eves Schweigen eher Ausdruck von Schwäche oder eingeschränkter Handlungsfähigkeit?','Eine reine Schwächedeutung greift zu kurz. Eve entscheidet sich zu schweigen, weil sie Ruprecht schützen will und Adams institutioneller Macht ausgeliefert ist. Ihr Verhalten besitzt damit eine aktive Schutzkomponente, findet aber unter massiver äußerer Einschränkung statt. Gerade diese Spannung zwischen eigenem Willen und struktureller Ohnmacht ist interpretatorisch produktiv.','Grundlage: Unterrichtsmaterial – Eve, Machtgefälle und Schweigen.'],
+['🔴 Abiturniveau','Beurteile, inwiefern Eve als Gegenfigur zu Adam verstanden werden kann.','Beide verfügen über Wissen und verschweigen Wahrheit, jedoch aus gegensätzlichen Motiven: Adam schützt sich selbst und seine Machtposition; Eve versucht, Ruprecht und ihre gesellschaftliche Stellung zu schützen. Die formale Ähnlichkeit des Verschweigens legt damit einen moralischen Gegensatz frei. Im Variant gewinnt Eves Perspektive zusätzlich an Gewicht, weil sie die Nacht ausführlicher rekonstruieren darf.','Grundlage: Unterrichtsmaterial – Figurenvergleich sowie Variant.']
+]},
+{id:'sprache',title:'Sprache & Kommunikation',icon:'Ⅵ',desc:'Gesprächsstrategien, Untertext, Macht, Missverständnisse und Gerichtssprache.',
+info:`<div class="info"><h3>Dialoganalyse im LK</h3><p>Untersuche Gesprächsanteile, Fragen und Antworten, Unterbrechungen, Sprechakte, Haupt- und Untertext, Mehrdeutigkeiten, Aposiopesen und die Veränderung von Machtpositionen. Sprache ist im Drama nicht nur Kommunikationsmittel, sondern ein Instrument des Verbergens und der Machtausübung.</p></div>`,
+tasks:[['🔴 Abiturniveau','Zeige, wie Sprache im Drama zugleich der Wahrheitsfindung und der Wahrheitsverhinderung dient.','Das Gerichtsverfahren ist auf sprachliche Rekonstruktion angewiesen: Aussagen, Fragen und Widersprüche bringen Indizien hervor. Zugleich manipuliert Adam genau diese Kommunikation durch suggestive Fragen, Drohungen, Ablenkungen und wechselnde Erklärungen. Eve verweigert aus Angst bzw. Schutzabsicht Informationen. Sprache besitzt deshalb eine doppelte Funktion: Sie kann aufklären, wird aber durch Interessen und Machtverhältnisse verzerrt.','Grundlage: Unterrichtsmaterial – Dialoganalyse und Gespräch Adam/Eve/Walter.']]
+},
+{id:'komik',title:'Komik',icon:'Ⅶ',desc:'Sprach-, Figuren-, Situations- und Körperkomik zwischen Lachen und Bedrohung.',
+info:`<div class="two"><div class="info"><h3>Formen</h3><p>Sprachwitz, Figurenkomik, Situationskomik und Körperkomik können sich überlagern. Hinzu kommt die dramatische Ironie durch den Wissensvorsprung des Publikums.</p></div><div class="info"><h3>Inkongruenz</h3><p>Besonders komisch ist der Gegensatz zwischen Anspruch und Wirklichkeit: Ausgerechnet der Richter, der Ordnung verkörpern soll, ist selbst Täter und produziert Unordnung.</p></div></div>`,
+tasks:[['🔴 Abiturniveau','„Je ernster man Adams Taten nimmt, desto schwieriger wird es, über Adam zu lachen.“ Erörtere.','Für die These spricht, dass Machtmissbrauch, Erpressung und sexuelle Bedrängung die Voraussetzung emotionaler Distanz unterlaufen, die für Komik wichtig sein kann. Gegen eine vollständige Auflösung des Komischen spricht Kleists Gestaltung: körperliche Missgeschicke, Wortwitz, situative Verkehrungen und Adams zunehmend erfolglose Selbstrettung bleiben komisch strukturiert. Die besondere Wirkung entsteht gerade aus der Spannung zwischen Lustspiel und ernstem Gegenstand.','Grundlage: Unterrichtsmaterial M17 – Formen und Theorien des Komischen sowie M14.']]
+},
+{id:'recht',title:'Recht, Macht & Gerechtigkeit',icon:'Ⅷ',desc:'Gericht, Willkür, Walter, Rechtsordnung und Justizkritik.',
+info:`<div class="info"><h3>Recht ≠ Gerechtigkeit</h3><p>Adam soll als Richter Recht herstellen und erzeugt durch Amtsmissbrauch neues Unrecht. Die Materialien lesen das Drama vor dem Hintergrund eines noch nicht vollständig professionalisierten Rechtssystems und der Bemühungen um Begrenzung richterlicher Willkür.</p></div>`,
+tasks:[['🔴 Abiturniveau','Prüfe, ob Walters Eingreifen am Ende tatsächlich eine funktionierende Rechtsordnung wiederherstellt.','Walter beendet Adams unmittelbare richterliche Macht und ermöglicht dessen Entlarvung. Damit funktioniert institutionelle Kontrolle grundsätzlich. Vollständig repariert ist die Ordnung dennoch nicht: Das Vertrauen wurde beschädigt, der Krugprozess bleibt nicht einfach abgeschlossen und Walter verhält sich gegenüber Adam teilweise nachsichtig. Das Ende kann deshalb als Aussicht auf Korrektur, nicht aber als vollständige Wiederherstellung von Gerechtigkeit gelesen werden.','Grundlage: Unterrichtsmaterial – Justizkritik und Schlussanalyse.']]
+},
+{id:'symbolik',title:'Symbolik & Motive',icon:'Ⅸ',desc:'Krug, Perücke, Körper, Akten und beschädigte Ordnung.',
+info:`<div class="two"><div class="info"><h3>Der Krug</h3><p>Das zentrale Objekt ist polyvalent: beschädigte Integrität, gestörte Beziehungen, Vertrauensverlust und eine beschädigte Rechts- bzw. Staatsordnung können sich darin spiegeln.</p></div><div class="info"><h3>Perücke & Körper</h3><p>Adams fehlende Perücke und seine sichtbaren Verletzungen unterlaufen seine Amtsautorität. Sein Körper wird selbst zum Indiz gegen die Fassade des Richters.</p></div></div>`,
+tasks:[['🔴 Abiturniveau','Beurteile die These: „Der Krug symbolisiert weniger verlorene Unschuld als eine zerbrochene Ordnung.“','Die Ordnungsdeutung ist besonders tragfähig, weil das Zerbrechen verschiedene Ebenen verbindet: Beziehung, Vertrauen, Amtsintegrität und Rechtssystem. Eine ausschließlich sexuelle Deutung als „verlorene Unschuld“ verengt dagegen die Symbolik und kann Eves Perspektive problematisch reduzieren. Dennoch darf die Bedrohung ihrer körperlichen und gesellschaftlichen Integrität nicht ausgeblendet werden. Überzeugend ist daher eine polyvalente Symboldeutung mit Schwerpunkt auf beschädigter Ordnung.','Grundlage: Unterrichtsmaterial – Symbolik des Krugs und Machtmissbrauch.']]
+},
+{id:'enden',title:'Zwei Enden – zwei Deutungen?',icon:'Ⅹ',desc:'Reguläres Ende und Variant im systematischen Vergleich.',
+info:`<table class="compare"><thead><tr><th>Aspekt</th><th>Variant</th><th>Endfassung</th><th>Konsequenz</th></tr></thead><tbody>
+<tr><td>Umfang</td><td>ca. 500 Verse</td><td>ca. 60 Verse</td><td>Endfassung pointierter und schneller.</td></tr>
+<tr><td>Eve</td><td>ausführliche Darstellung der Nacht</td><td>deutlich weniger Raum</td><td>Variant stärkt ihre Perspektive.</td></tr>
+<tr><td>Ruprecht</td><td>Vertrauen nach ausführlicher Aufklärung</td><td>vergibt sehr schnell</td><td>Unterschiedliche Gewichtung von Erklärung und Versöhnung.</td></tr>
+<tr><td>Walter</td><td>fordert detaillierte Darstellung; macht Eve auch Vorwürfe</td><td>beruhigt Eve und legt Adams Fehlverhalten offen</td><td>Walters Rolle verändert sich.</td></tr>
+<tr><td>Militär</td><td>Einzug real, Batavia-Lüge erfunden</td><td>Geschichte Adams insgesamt erfunden</td><td>Adams Manipulation funktioniert unterschiedlich.</td></tr>
+<tr><td>Nacht</td><td>nahezu vollständig rekonstruiert</td><td>wesentliche Leerstellen</td><td>Aufklärung vs. produktive Offenheit.</td></tr></tbody></table>`,
+tasks:[
+['🟡 LK-Niveau','Warum kann man sagen, dass der Variant Eves Perspektive stärkt?','Im Variant erhält Eve erheblich mehr Raum, die nächtlichen Vorgänge selbst zu rekonstruieren. Dadurch werden ihre Motive, Adams Verhalten und die Gründe für das Misstrauen anderer Figuren expliziter. Die ungleiche Machtkonstellation verschiebt sich insofern, als die zuvor zum Schweigen gebrachte Figur ihre Sicht ausführlich artikulieren kann.','Grundlage: Unterrichtsmaterial – Variant/Endfassung, ca. 500 vs. ca. 60 Verse.'],
+['🔴 Abiturniveau','„Kleists Kürzung verbessert die Komödie, schwächt aber Eve.“ Diskutiere.','Für die These spricht, dass die Endfassung durch Kürze, Tempo und Leerstellen dramaturgisch konzentrierter wirkt, während der Variant langatmiger und erklärender ist. Zugleich verliert Eve in der Endfassung einen erheblichen Teil des Raums, in dem sie ihre Perspektive und Adams Verhalten detailliert darlegen kann. Gegen eine pauschale Abwertung der Endfassung spricht, dass Leerstellen das Publikum stärker zur Rekonstruktion zwingen und die schnelle Versöhnung selbst kritisch hinterfragt werden kann. Ein differenziertes Urteil muss daher ästhetische Konzentration und Figurenperspektive gegeneinander abwägen.','Grundlage: Unterrichtsmaterial – Fazit zum Variant und zur endgültigen Fassung.']
+]},
+{id:'kontext',title:'Kleist & Kontext',icon:'Ⅺ',desc:'Kant-Krise, politische Ordnung, Ödipus und Erkenntnisproblematik.',
+info:`<div class="two"><div class="info"><h3>Erkenntnis</h3><p>Die Materialien verbinden Kleists sogenannte Kant-Krise mit den subjektiven „Wahrheiten“ der Figuren: Wahrnehmung und Erkenntnis werden durch Interessen, Vorurteile und Perspektiven geprägt.</p></div><div class="info"><h3>Politischer Kontext</h3><p>Das Stück lässt sich als Kritik an staatlicher Willkür und einem unzureichend professionalisierten Rechtssystem lesen. Gleichzeitig dürfen historische Unterschiede nicht eingeebnet werden.</p></div></div>`,
+tasks:[['🔴 Abiturniveau','Inwiefern lässt sich Kleists Erkenntnisproblematik für die Interpretation des Dramas fruchtbar machen, ohne eine absolute Unmöglichkeit von Wahrheit zu behaupten?','Die Figuren verfügen zunächst über perspektivisch begrenzte Wahrheiten: Marthe urteilt aufgrund ihrer Überzeugungen, Adam täuscht interessengeleitet, Eve verschweigt aus Schutzmotiven und Licht beobachtet mit eigenen Interessen. Die Wahrheitssuche ist daher schwierig. Dennoch wird Adams Täterschaft durch Indizien und Aussagen letztlich objektivierbar. Das Drama zeigt somit eher die Schwierigkeiten interessengeleiteter Erkenntnis als die prinzipielle Unmöglichkeit von Wahrheit.','Grundlage: Unterrichtsmaterial M16 – Kant-Krise und Lösungshinweise.']]
+},
+{id:'abi',title:'Abitur-Check',icon:'Ⅻ',desc:'Vernetzte Interpretations-, Vergleichs- und Urteilsaufgaben.',
+info:`<div class="abi"><h3>Abiturkompetenz</h3><p>Eine starke Antwort verbindet <strong>präzise These, Textbezug, Analyse, Deutung, Gegenposition und begründetes Urteil</strong>. Vermeide reine Inhaltswiedergabe.</p></div>`,
+tasks:[
+['🔴 Abiturniveau','Inwiefern ist Adam nicht nur eine komische Figur, sondern zugleich eine Bedrohungsfigur?','Adam ist durch körperliche Beschädigung, Rollenwiderspruch und scheiternde Manipulation komisch gestaltet. Bedrohlich ist jedoch, dass er als Richter reale Macht besitzt: Er kann Eve einschüchtern, Ruprecht belasten und den Prozess beeinflussen. Die Figur verbindet damit Komödienmechanismen mit institutioneller und sexueller Machtausübung. Gerade diese Gleichzeitigkeit verhindert eine rein harmlose Lektüre.','Grundlage: Unterrichtsmaterial – Komik, Adam, Justizkritik, Machtmissbrauch.'],
+['🔴 Abiturniveau','„Nicht der Krug, sondern das Vertrauen ist im Drama zerbrochen.“ Erörtere.','Die These verschiebt den Blick vom Gegenstand auf Beziehungen und Institutionen. Zerbrochen ist Eves Vertrauen in staatliche Autorität, Ruprechts und Marthes Vertrauen in Eve sowie das Vertrauen in Adam als Richter. Die Schlussversöhnung repariert diese Schäden nur teilweise. Der Krug bleibt jedoch als materielles Zentrum wichtig, weil er gerade diese verschiedenen Brüche symbolisch bündelt.','Grundlage: Unterrichtsmaterial – Vertrauensbeziehungen, Symbolik und Schluss.']
+]}
+];
+
+const figures={
+Adam:'<h3>Adam</h3><p><strong>Richter und Täter.</strong> Intelligent, improvisationsfähig und manipulativ. Er nutzt sein Amt zur Selbstrettung, bedroht Eve indirekt und versucht Ruprecht zu belasten. Seine sichtbaren Verletzungen und die fehlende Perücke unterlaufen seine Autorität.</p>',
+Eve:'<h3>Eve</h3><p><strong>Wissende unter Druck.</strong> Sie schweigt nicht aus Unwissen, sondern vor allem zum Schutz Ruprechts und aus Angst vor Adams Macht. Ihr Schweigen führt zugleich zu Misstrauen und Isolation.</p>',
+Ruprecht:'<h3>Ruprecht</h3><p><strong>Liebender und Eifersüchtiger.</strong> Emotional, impulsiv und misstrauisch. Er verletzt Eve sprachlich, erkennt am Ende aber sein Fehlurteil und versöhnt sich mit ihr.</p>',
+Marthe:'<h3>Marthe Rull</h3><p><strong>Krug, Ehre, Ordnung.</strong> Sie fixiert sich auf Schaden und gesellschaftliche Ordnung und vertraut ihrer Tochter lange nicht. Am Schluss will sie den Krugstreit weiterverfolgen.</p>',
+Walter:'<h3>Gerichtsrat Walter</h3><p><strong>Kontrollinstanz.</strong> Er fordert regelgerechte und öffentliche Rechtsprechung und begrenzt Adams Willkür. Zugleich bleibt sein Verhalten am Ende nicht völlig frei von Ambivalenz.</p>',
+Licht:'<h3>Licht</h3><p><strong>Beobachter und Aufklärer.</strong> Sein Name verweist auf die Enthüllungsfunktion. Er erkennt Adams Fehlverhalten früh, ist aber auch nicht frei von eigenen Interessen.</p>',
+Veit:'<h3>Veit Tümpel</h3><p><strong>Vater Ruprechts.</strong> Teil der dörflichen Familien- und Ehrordnung; seine Position trägt zur sozialen Rahmung des Konflikts bei.</p>'
+};
+
+const challengeQs=[
+'Beurteile, ob Adams Entlarvung zugleich eine Wiederherstellung von Gerechtigkeit bedeutet.',
+'Warum ist Eves Schweigen dramaturgisch produktiver als eine sofortige Aussage?',
+'Welche Funktion besitzt die Komik für die Justizkritik des Dramas?',
+'Ist Walter Gegenmodell zu Adam oder nur eine bessere Variante institutioneller Macht?',
+'Welches Ende ist für eine moderne Inszenierung interpretatorisch ergiebiger – und warum?',
+'Inwiefern ist der Krug zugleich Gegenstand, Beweisstück und Symbol?'
+];
+
+let progress=JSON.parse(localStorage.getItem('krugProgress')||'{}');
+let answers=JSON.parse(localStorage.getItem('krugAnswers')||'{}');
+
+function save(){localStorage.setItem('krugProgress',JSON.stringify(progress));localStorage.setItem('krugAnswers',JSON.stringify(answers))}
+function renderHome(){
+ const g=document.getElementById('moduleGrid');g.innerHTML='';
+ modules.forEach((m,i)=>{
+  const p=progress[m.id]||0;
+  g.innerHTML+=`<article class="card"><div class="num">${m.icon}</div><h3>${m.title}</h3><p>${m.desc}</p><div class="bar"><i style="width:${p}%"></i></div><p><span class="status ${p>=75?'safe':p>=40?'repeat':'focus'}">${p>=75?'sicher':p>=40?'noch einmal wiederholen':'Schwerpunkt setzen'}</span> · ${p}%</p><button class="btn" onclick="openModule('${m.id}')">Öffnen →</button></article>`
+ });
+ const vals=modules.map(m=>progress[m.id]||0), avg=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+ document.getElementById('overallText').textContent=avg+' %';document.getElementById('overallBar').style.width=avg+'%';
+ const a=document.getElementById('progressAdvice');a.textContent=avg>=75?'sicher':avg>=40?'noch einmal wiederholen':'Schwerpunkt setzen';a.className='status '+(avg>=75?'safe':avg>=40?'repeat':'focus')
+}
+function taskHTML(m,t,idx){
+ const key=m.id+'_'+idx;
+ return `<div class="task"><span class="badge">${t[0]}</span><h3>${t[1]}</h3><textarea id="a_${key}" placeholder="Formuliere zuerst deine eigene Antwort …" oninput="remember('${key}',this.value)">${esc(answers[key]||'')}</textarea><div class="actions"><button class="btn primary" onclick="toggleSolution('${key}','${m.id}')">Musterlösung anzeigen</button><button class="btn" onclick="compare('${key}')">Meine Antwort vergleichen</button></div><div id="s_${key}" class="solution"><strong>Musterlösung / Erwartungshorizont</strong><p>${t[2]}</p><div class="source">${t[3]}</div><div class="checkline">Selbsteinschätzung: <button class="btn" onclick="rate('${m.id}',50)">teilweise</button><button class="btn" onclick="rate('${m.id}',100)">sicher</button></div></div></div>`
+}
+function openModule(id){
+ const m=modules.find(x=>x.id===id);show('module');
+ document.getElementById('moduleContent').innerHTML=`<div class="sectionHead"><div class="eyebrow">Modul ${m.icon}</div><h2>${m.title}</h2><p class="lead">${m.desc}</p></div>${m.info}<h2 style="margin-top:38px">Training</h2>${m.tasks.map((t,i)=>taskHTML(m,t,i)).join('')}<div class="abi"><div class="eyebrow">Das musst du fürs Abi können</div><h3>${abiCore[id]||'Analysieren, deuten, belegen und begründet urteilen.'}</h3><p>Verknüpfe deine Aussagen immer mit konkreten Figureninteressen, dramaturgischen Funktionen und geeigneten Textbelegen.</p></div>`;
+ if(id==='figuren'){let b=document.getElementById('figButtons');Object.keys(figures).forEach(n=>b.innerHTML+=`<button class="figBtn" onclick="showFigure('${n}')">${n}</button>`);showFigure('Adam')}
+ window.scrollTo({top:0,behavior:'smooth'})
+}
+const abiCore={
+handlung:'Vorgeschichte und Bühnenhandlung trennen; Enthüllungsstruktur und Wissensverteilung funktional deuten.',
+figuren:'Figuren nie nur mit Eigenschaften beschreiben, sondern Wissen, Interessen, Beziehungen und Funktion analysieren.',
+konstellation:'Vertrauen, Abhängigkeit und Macht als dynamische Beziehungen erklären.',
+adam:'Adams Komik und Gefährlichkeit zusammendenken; individuellen Machtmissbrauch mit institutioneller Kritik verbinden.',
+eve:'Eves Schweigen aus Schutzmotiv, Machtgefälle und gesellschaftlicher Lage erklären – nicht als bloße Passivität.',
+sprache:'Kommunikation als Kampf um Wahrheit und Macht analysieren; Untertext und Gesprächssteuerung berücksichtigen.',
+komik:'Komikformen benennen und ihre Funktion zwischen Herabsetzung, Entlarvung und Ernst erklären.',
+recht:'Zwischen geltendem Recht, richterlicher Praxis und Gerechtigkeit unterscheiden; Walters Kontrollfunktion kritisch bewerten.',
+symbolik:'Den Krug polyvalent deuten und eine eindimensionale „Unschulds“-Lesart vermeiden.',
+enden:'Variant und Endfassung nicht nur inhaltlich, sondern dramaturgisch und interpretatorisch vergleichen.',
+kontext:'Historische und poetologische Kontexte textnah nutzen, ohne das Drama auf Biographie zu reduzieren.',
+abi:'Von der These über Analyse und Belege zu einem abgewogenen Urteil gelangen.'
+};
+function showFigure(n){document.getElementById('figurePanel').innerHTML=figures[n]}
+function remember(k,v){answers[k]=v;save()}
+function toggleSolution(k,id){let s=document.getElementById('s_'+k);s.classList.toggle('open');if(s.classList.contains('open')){progress[id]=Math.max(progress[id]||0,35);save()}}
+function compare(k){let a=document.getElementById('a_'+k);if(!a.value.trim()){alert('Schreibe zuerst eine eigene Antwort.');a.focus();return}let s=document.getElementById('s_'+k);s.classList.add('open');s.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function rate(id,val){progress[id]=Math.max(progress[id]||0,val);save();alert(val===100?'Als sicher markiert.':'Als teilweise sicher markiert.')}
+function show(id){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function goHome(){show('home');renderHome();window.scrollTo({top:0,behavior:'smooth'})}
+function toggleTheme(){let d=document.documentElement;d.dataset.theme=d.dataset.theme==='dark'?'light':'dark';localStorage.setItem('krugTheme',d.dataset.theme)}
+function challenge(){const q=challengeQs[Math.floor(Math.random()*challengeQs.length)];document.getElementById('modalQuestion').innerHTML=q+'<br><br><small>Tipp: Formuliere eine These, nenne Textbezüge, prüfe eine Gegenposition und komme zu einem Urteil.</small>';document.getElementById('modalAnswer').value='';document.getElementById('appModal').classList.add('open')}
+function closeModal(){document.getElementById('appModal').classList.remove('open')}
+function esc(s){return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
+
+const examPool=[
+['Adam','Warum ist Adams Doppelrolle dramaturgisch zentral?',['Weil Täter und Ermittler identisch sind','Weil Adam zwei Ämter besitzt','Weil Walter der Täter ist'],0],
+['Dramaturgie','Was kennzeichnet die analytische Struktur?',['Die zentrale Vorgeschichte wird nachträglich enthüllt','Alles geschieht chronologisch auf der Bühne','Es gibt keine Vorgeschichte'],0],
+['Eve','Welche Deutung ihres Schweigens ist am tragfähigsten?',['Schutzmotiv unter asymmetrischen Machtbedingungen','Sie kennt die Wahrheit nicht','Sie möchte Adam schützen'],0],
+['Komik','Welche Inkongruenz ist besonders zentral?',['Richterrolle vs. Täterrolle','Marthe vs. Krug','Dorf vs. Stadt'],0],
+['Recht','Welche Funktion hat Walter primär?',['Übergeordnete Kontrolle der lokalen Rechtsprechung','Verteidiger Ruprechts','Besitzer des Krugs'],0],
+['Symbolik','Welche Deutung ist für den Krug besonders produktiv?',['Polyvalentes Symbol beschädigter Integrität und Ordnung','Nur Haushaltsgegenstand','Nur Symbol für Geld'],0],
+['Variant','Was unterscheidet den Variant besonders?',['Eve rekonstruiert die Nacht ausführlicher','Adam wird nicht entlarvt','Ruprecht kommt nicht vor'],0],
+['Sprache','Was gehört zu einer LK-Dialoganalyse?',['Sprechakte, Untertext, Gesprächsanteile und Machtpositionen','Nur Wortarten zählen','Nur Inhaltsangabe'],0],
+['Kontext','Was zeigt die Erkenntnisproblematik im Drama?',['Perspektiven und Interessen erschweren Wahrheitssuche','Wahrheit ist prinzipiell unmöglich','Alle Figuren wissen dasselbe'],0],
+['Ende','Warum bleibt das Ende ambivalent?',['Entlarvung und Versöhnung beseitigen nicht alle institutionellen und zwischenmenschlichen Schäden','Adam wird König','Der Krug ist repariert'],0],
+['Ruprecht','Was verschärft Eves Lage?',['Sein Misstrauen und seine Eifersucht','Seine vollständige Kenntnis der Nacht','Seine Richterrolle'],0],
+['Marthe','Was bleibt für Marthe am Ende wichtig?',['Der Rechtsstreit um den Krug','Adams Karriere','Walters Perücke'],0]
+];
+function startExam(){
+ show('exam');let qs=[...examPool].sort(()=>Math.random()-.5).slice(0,10);window.currentExam=qs;
+ document.getElementById('examContent').innerHTML=qs.map((q,i)=>`<div class="examQuestion"><span class="badge">Aufgabe ${i+1}</span><h3>${q[0]}</h3><p>${q[1]}</p><div class="options">${q[2].map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}</div></div>`).join('')+`<div class="actions"><button class="btn primary" onclick="finishExam()">Prüfung auswerten</button></div><div id="examResult"></div>`;window.scrollTo(0,0)
+}
+function finishExam(){
+ let score=0, missed=[];window.currentExam.forEach((q,i)=>{let e=document.querySelector(`input[name=q${i}]:checked`);if(e&&+e.value===q[3])score++;else missed.push(q[0])});
+ let pct=Math.round(score/window.currentExam.length*100);document.getElementById('examResult').innerHTML=`<div class="result">${score}/10 richtig · ${pct}%</div><p>${missed.length?'Wiederhole besonders: <strong>'+[...new Set(missed)].join(', ')+'</strong>.':'Sehr sicherer Durchgang.'}</p><p>Nach dem Prüfungsmodus kannst du die betreffenden Module öffnen und dort die ausführlichen Musterlösungen vergleichen.</p>`;
+ progress.abi=Math.max(progress.abi||0,pct);save()
+}
+document.documentElement.dataset.theme=localStorage.getItem('krugTheme')||'light';renderHome();
+
+if ('serviceWorker' in navigator) {
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+}
+
+</script>
+</body>
+</html>
